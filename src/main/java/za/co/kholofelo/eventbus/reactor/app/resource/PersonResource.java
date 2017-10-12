@@ -1,7 +1,7 @@
 package za.co.kholofelo.eventbus.reactor.app.resource;
 
 import lombok.Data;
-import za.co.kholofelo.eventbus.reactor.app.model.Quote;
+import za.co.kholofelo.eventbus.reactor.app.model.Person;
 
 /**
  * @author Kholofelo Maloma
@@ -9,9 +9,9 @@ import za.co.kholofelo.eventbus.reactor.app.model.Quote;
  */
 
 @Data
-public class QuoteResource {
+public class PersonResource {
 
-    String type;
-    Quote value;
+    private Integer id;
+    private Person person;
 
 }

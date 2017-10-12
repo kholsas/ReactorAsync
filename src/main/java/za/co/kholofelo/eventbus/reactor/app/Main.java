@@ -65,6 +65,7 @@ public class Main implements CommandLineRunner{
         LOGGER.info("Event Bus is " + eventBus);
         eventBus.on($("quotes"), receiver);
         publisher.publishQuotes(NUMBER_OF_QUOTES);
+        publisher.publishPersons(2);
     }
 
 
