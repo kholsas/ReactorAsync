@@ -47,9 +47,7 @@ public class Publisher {
         AtomicInteger counter = new AtomicInteger(1);
 
         for (int i = 0; i < numberOfQuotes; i++) {
-
             eventBus.notify("persons", Event.wrap(counter.getAndIncrement()));
-
         }
 
         latch.await();

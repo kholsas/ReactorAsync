@@ -12,8 +12,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import reactor.Environment;
 import reactor.bus.EventBus;
+import za.co.kholofelo.eventbus.reactor.app.async.PersonsReceiver;
 import za.co.kholofelo.eventbus.reactor.app.async.Publisher;
-import za.co.kholofelo.eventbus.reactor.app.async.Receiver;
+import za.co.kholofelo.eventbus.reactor.app.async.QuotesReceiver;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -49,7 +50,9 @@ public class Main implements CommandLineRunner{
     private EventBus eventBus;
 
     @Autowired
-    private Receiver receiver;
+    private PersonsReceiver personsReceiver;
+    @Autowired
+    private QuotesReceiver quotesReceiver;
 
     @Autowired
     private Publisher publisher;
@@ -63,9 +66,11 @@ public class Main implements CommandLineRunner{
     @Override
     public void run(String... args) throws Exception {
         LOGGER.info("Event Bus is " + eventBus);
-        eventBus.on($("quotes"), receiver);
-        publisher.publishQuotes(NUMBER_OF_QUOTES);
+        eventBus.on($("quotes"), quotesReceiver);
+        eventBus.on($("persons"), personsReceiver);
+//        publisher.publishQuotes(NUMBER_OF_QUOTES);
         publisher.publishPersons(2);
+
     }
 
 
@@ -73,11 +78,7 @@ public class Main implements CommandLineRunner{
         ApplicationContext app = SpringApplication.run(Main.class, args);
         LOGGER.info("Started Event Bus");
 
-        try {
-            new Main().run(args);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
 
         app.getBean(CountDownLatch.class).await(1, TimeUnit.SECONDS);
 

@@ -5,12 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import reactor.bus.Event;
 import reactor.fn.Consumer;
 import za.co.kholofelo.eventbus.reactor.app.model.Person;
-import za.co.kholofelo.eventbus.reactor.app.resource.PersonResource;
-import za.co.kholofelo.eventbus.reactor.app.resource.QuoteResource;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,8 +18,8 @@ import java.util.concurrent.CountDownLatch;
  * @since 2017/10/12.
  */
 @Service
-public class Receiver implements Consumer<Event<Integer>> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Receiver.class);
+public class PersonsReceiver implements Consumer<Event<Integer>> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PersonsReceiver.class);
 
     private Map<Integer, Person> dataFromDatabase = new HashMap<>();
 
@@ -44,22 +41,14 @@ public class Receiver implements Consumer<Event<Integer>> {
     @Autowired
     CountDownLatch latch;
 
-    RestTemplate restTemplate = new RestTemplate();
 
     @Override
     public void accept(Event<Integer> event) {
 
-        if (event.getData() < 3) {
-            LOGGER.info("=== Persons Listing =======");
-            PersonResource personResource = new PersonResource();
-            Person person = dataFromDatabase.get(event.getData());
+        LOGGER.info("=== Persons Listing =======");
+        Person person = dataFromDatabase.get(event.getData());
 
-            LOGGER.info("Person : " + person);
-        } else {
-            LOGGER.info(" ########## Quotes Listing ##########");
+        LOGGER.info("Person : " + person);
 
-            QuoteResource quoteResource = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", QuoteResource.class);
-            LOGGER.info("Quote " + event.getData() + ": " + quoteResource.getValue().getQuote());
-        }
     }
 }
