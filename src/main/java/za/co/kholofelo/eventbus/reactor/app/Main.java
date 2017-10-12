@@ -32,7 +32,7 @@ public class Main implements CommandLineRunner{
     private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
 
-    private static final int NUMBER_OF_QUOTES = 15;
+    private static final int NUMBER_OF_QUOTES = 3;
 
     @Bean
     Environment env() {

@@ -1,5 +1,7 @@
 package za.co.kholofelo.eventbus.reactor.app.async;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.bus.Event;
@@ -15,6 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class Publisher {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Publisher.class);
 
     @Autowired
     EventBus eventBus;
@@ -34,8 +37,8 @@ public class Publisher {
 
         long elapsed = System.currentTimeMillis() - start;
 
-        System.out.println("Elapsed time: " + elapsed + "ms");
-        System.out.println("Average time per quote: " + elapsed / numberOfQuotes + "ms");
+        LOGGER.info("Elapsed time: " + elapsed + "ms");
+        LOGGER.info("Average time per quote: " + elapsed / numberOfQuotes + "ms");
     }
 
     public void publishPersons(int numberOfQuotes) throws InterruptedException {
@@ -53,7 +56,7 @@ public class Publisher {
 
         long elapsed = System.currentTimeMillis() - start;
 
-        System.out.println("Elapsed time: " + elapsed + "ms");
-        System.out.println("Average time per Person: " + elapsed / numberOfQuotes + "ms");
+        LOGGER.info("Elapsed time: " + elapsed + "ms");
+        LOGGER.info("Average time per Person: " + elapsed / numberOfQuotes + "ms");
     }
 }
