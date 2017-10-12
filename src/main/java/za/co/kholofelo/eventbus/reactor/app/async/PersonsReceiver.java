@@ -18,35 +18,21 @@ import java.util.concurrent.CountDownLatch;
  * @since 2017/10/12.
  */
 @Service
-public class PersonsReceiver implements Consumer<Event<Integer>> {
+public class PersonsReceiver implements Consumer<Event<Person>> {
     private static final Logger LOGGER = LoggerFactory.getLogger(PersonsReceiver.class);
 
-    private Map<Integer, Person> dataFromDatabase = new HashMap<>();
 
-
-    {
-        Person person = new Person();
-        person.setAge(12);
-        person.setFirstName("Kholofelo");
-        person.setLastName("Maloma");
-        dataFromDatabase.put(1, person);
-
-        person = new Person();
-        person.setFirstName("Some First Name");
-        person.setLastName("Good Last Name");
-        person.setAge(24);
-        dataFromDatabase.put(2, person);
-    }
 
     @Autowired
     CountDownLatch latch;
 
 
     @Override
-    public void accept(Event<Integer> event) {
-
+    public void accept(Event<Person> event) {
+        //Do some work with the incoming data... This is the data that was published upon a certain action.
+        // Example what to do here would be to persist or update a database record
         LOGGER.info("=== Persons Listing =======");
-        Person person = dataFromDatabase.get(event.getData());
+        Person person = event.getData();
 
         LOGGER.info("Person : " + person);
 

@@ -69,7 +69,7 @@ public class Main implements CommandLineRunner{
         eventBus.on($("quotes"), quotesReceiver);
         eventBus.on($("persons"), personsReceiver);
 //        publisher.publishQuotes(NUMBER_OF_QUOTES);
-        publisher.publishPersons(2);
+        publisher.publishPersons(3);
 
     }
 

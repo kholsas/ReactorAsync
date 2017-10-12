@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.bus.Event;
 import reactor.bus.EventBus;
+import za.co.kholofelo.eventbus.reactor.app.database.FakeDatabase;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -44,10 +45,8 @@ public class Publisher {
     public void publishPersons(int numberOfQuotes) throws InterruptedException {
         long start = System.currentTimeMillis();
 
-        AtomicInteger counter = new AtomicInteger(1);
-
         for (int i = 0; i < numberOfQuotes; i++) {
-            eventBus.notify("persons", Event.wrap(counter.getAndIncrement()));
+            eventBus.notify("persons", Event.wrap(FakeDatabase.getPersonWithKey(i)));
         }
 
         latch.await();
