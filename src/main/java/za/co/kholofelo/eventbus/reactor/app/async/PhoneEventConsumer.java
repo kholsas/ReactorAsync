@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import reactor.bus.Event;
 import reactor.fn.Consumer;
 import za.co.kholofelo.eventbus.reactor.app.model.Person;
+import za.co.kholofelo.eventbus.reactor.app.model.Phone;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -16,7 +17,7 @@ import java.util.concurrent.CountDownLatch;
  * @since 2017/10/12.
  */
 @Service
-public class PhoneEventConsumer implements Consumer<Event<Person>> {
+public class PhoneEventConsumer implements Consumer<Event<Phone>> {
     private static final Logger LOGGER = LoggerFactory.getLogger(PhoneEventConsumer.class);
 
 
@@ -25,8 +26,9 @@ public class PhoneEventConsumer implements Consumer<Event<Person>> {
 
 
     @Override
-    public void accept(Event<Person> event) {
+    public void accept(Event<Phone> event) {
         LOGGER.info("\n\nEvent came through to the phone event consumer\n\n");
+        LOGGER.info("Phone that came through is : " + event.getData());
         latch.countDown();
     }
 }

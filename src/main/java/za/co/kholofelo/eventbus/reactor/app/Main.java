@@ -11,10 +11,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import reactor.Environment;
+import reactor.bus.Event;
 import reactor.bus.EventBus;
 import za.co.kholofelo.eventbus.reactor.app.async.PersonsConsumer;
+import za.co.kholofelo.eventbus.reactor.app.async.PhoneEventConsumer;
 import za.co.kholofelo.eventbus.reactor.app.async.Publisher;
 import za.co.kholofelo.eventbus.reactor.app.async.QuotesConsumer;
+import za.co.kholofelo.eventbus.reactor.app.database.FakeDatabase;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -52,6 +55,8 @@ public class Main implements CommandLineRunner{
     @Autowired
     private PersonsConsumer personsConsumer;
     @Autowired
+    private PhoneEventConsumer phoneEventConsumer;
+    @Autowired
     private QuotesConsumer quotesConsumer;
 
     @Autowired
@@ -66,11 +71,23 @@ public class Main implements CommandLineRunner{
     @Override
     public void run(String... args) throws Exception {
         LOGGER.info("Event Bus is " + eventBus);
-        eventBus.on($("quotes"), quotesConsumer);
-        eventBus.on($("persons"), personsConsumer);
+
+        registerEventConsumers();
+
+
+        eventBus.notify("persons", Event.wrap(FakeDatabase.getPersonWithKey(1)));
+//        eventBus.notify("persons", Event.wrap(FakeDatabase.getFakePhone()));
+      /*
+
         publisher.publishQuotes(NUMBER_OF_QUOTES);
 //        publisher.publishPersons(3);
+*/
+    }
 
+    private void registerEventConsumers() {
+        eventBus.on($("quotes"), quotesConsumer);
+        eventBus.on($("persons"), personsConsumer);
+        eventBus.on($("persons"), phoneEventConsumer);
     }
 
 

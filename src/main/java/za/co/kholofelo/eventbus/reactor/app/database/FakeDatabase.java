@@ -1,6 +1,7 @@
 package za.co.kholofelo.eventbus.reactor.app.database;
 
 import za.co.kholofelo.eventbus.reactor.app.model.Person;
+import za.co.kholofelo.eventbus.reactor.app.model.Phone;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +35,12 @@ public class FakeDatabase {
         dataFromDatabase.put(2, person);
     }
 
+    public static Phone getFakePhone(){
+        Phone phone = new Phone();
+        phone.setPhoneNumber("0782249652");
+        phone.setSerialNumber("434fgFs");
+        return phone;
+    }
     public static Person getPersonWithKey(int key) {
         return dataFromDatabase.get(key);
     }
