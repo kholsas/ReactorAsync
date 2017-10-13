@@ -1,9 +1,9 @@
 package za.co.kholofelo.eventbus.reactor.app.database;
 
-import za.co.kholofelo.eventbus.reactor.app.model.Person;
-import za.co.kholofelo.eventbus.reactor.app.model.Phone;
+ import za.co.kholofelo.eventbus.reactor.app.model.Agent;
+ import za.co.kholofelo.eventbus.reactor.app.model.Phone;
 
-import java.util.HashMap;
+ import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -12,36 +12,38 @@ import java.util.Map;
  */
 public class FakeDatabase {
 
-    private static Map<Integer, Person> dataFromDatabase = new HashMap<>();
+    private static Map<Integer, Agent> dataFromDatabase = new HashMap<>();
 
 
     static {
-        Person person = new Person();
-        person.setAge(12);
-        person.setFirstName("Kholofelo");
-        person.setLastName("Maloma");
-        dataFromDatabase.put(0, person);
+        Agent agent = new Agent();
+        agent.setEmployeeNumber("33222");
+        agent.setFirstName("Kholofelo");
+        agent.setLastName("Maloma");
+        dataFromDatabase.put(0, agent);
 
-        person = new Person();
-        person.setFirstName("Some First Name");
-        person.setLastName("Good Last Name");
-        person.setAge(24);
-        dataFromDatabase.put(1, person);
+        agent = new Agent();
+        agent.setFirstName("Some First Name");
+        agent.setLastName("Good Last Name");
+        agent.setEmployeeNumber("754342");
+        dataFromDatabase.put(1, agent);
 
-        person = new Person();
-        person.setFirstName("Camera Name");
-        person.setLastName("Some LastOne");
-        person.setAge(96);
-        dataFromDatabase.put(2, person);
+        agent = new Agent();
+        agent.setFirstName("Camera Name");
+        agent.setLastName("Some LastOne");
+        agent.setEmployeeNumber("RF5443");
+        dataFromDatabase.put(2, agent);
     }
 
-    public static Phone getFakePhone(){
+    public static Phone getFakePhone() {
         Phone phone = new Phone();
         phone.setPhoneNumber("0782249652");
         phone.setSerialNumber("434fgFs");
         return phone;
     }
-    public static Person getPersonWithKey(int key) {
-        return dataFromDatabase.get(key);
+
+    public static Agent getPersonWithKey(int key) {
+
+        return dataFromDatabase.get(key).clone();
     }
 }

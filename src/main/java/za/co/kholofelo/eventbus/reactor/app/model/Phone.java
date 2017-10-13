@@ -12,6 +12,11 @@ public class Phone {
 
     private String serialNumber;
     private String phoneNumber;
+    private State state;
 
-
+    public enum State {
+        RING,
+        ANSWERED,
+        IDDLING,
+    }
 }
