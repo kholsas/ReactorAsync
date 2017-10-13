@@ -9,8 +9,6 @@ import reactor.bus.Event;
 import reactor.fn.Consumer;
 import za.co.kholofelo.eventbus.reactor.app.model.Person;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -18,9 +16,8 @@ import java.util.concurrent.CountDownLatch;
  * @since 2017/10/12.
  */
 @Service
-public class PersonsReceiver implements Consumer<Event<Person>> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PersonsReceiver.class);
-
+public class PhoneEventConsumer implements Consumer<Event<Person>> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PhoneEventConsumer.class);
 
 
     @Autowired
@@ -29,12 +26,7 @@ public class PersonsReceiver implements Consumer<Event<Person>> {
 
     @Override
     public void accept(Event<Person> event) {
-        //Do some work with the incoming data... This is the data that was published upon a certain action.
-        // Example what to do here would be to persist or update a database record
-        LOGGER.info("=== Persons Listing =======");
-        Person person = event.getData();
-
-        LOGGER.info("Person : " + person);
-
+        LOGGER.info("\n\nEvent came through to the phone event consumer\n\n");
+        latch.countDown();
     }
 }

@@ -11,6 +11,8 @@ import za.co.kholofelo.eventbus.reactor.app.database.FakeDatabase;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static reactor.bus.selector.Selectors.$;
+
 /**
  * @author Kholofelo Maloma
  * @since 2017/10/12.
@@ -25,8 +27,12 @@ public class Publisher {
     @Autowired
     CountDownLatch latch;
 
+    @Autowired
+    PhoneEventConsumer phoneEventConsumer;
+
     public void publishQuotes(int numberOfQuotes) throws InterruptedException {
         long start = System.currentTimeMillis();
+        LOGGER.info("*************************\n\n "+ eventBus.getConsumerRegistry().register($("try"), phoneEventConsumer));
 
         AtomicInteger counter = new AtomicInteger(1);
 

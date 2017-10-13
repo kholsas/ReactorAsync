@@ -12,9 +12,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import reactor.Environment;
 import reactor.bus.EventBus;
-import za.co.kholofelo.eventbus.reactor.app.async.PersonsReceiver;
+import za.co.kholofelo.eventbus.reactor.app.async.PersonsConsumer;
 import za.co.kholofelo.eventbus.reactor.app.async.Publisher;
-import za.co.kholofelo.eventbus.reactor.app.async.QuotesReceiver;
+import za.co.kholofelo.eventbus.reactor.app.async.QuotesConsumer;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -50,9 +50,9 @@ public class Main implements CommandLineRunner{
     private EventBus eventBus;
 
     @Autowired
-    private PersonsReceiver personsReceiver;
+    private PersonsConsumer personsConsumer;
     @Autowired
-    private QuotesReceiver quotesReceiver;
+    private QuotesConsumer quotesConsumer;
 
     @Autowired
     private Publisher publisher;
@@ -66,10 +66,10 @@ public class Main implements CommandLineRunner{
     @Override
     public void run(String... args) throws Exception {
         LOGGER.info("Event Bus is " + eventBus);
-        eventBus.on($("quotes"), quotesReceiver);
-        eventBus.on($("persons"), personsReceiver);
-//        publisher.publishQuotes(NUMBER_OF_QUOTES);
-        publisher.publishPersons(3);
+        eventBus.on($("quotes"), quotesConsumer);
+        eventBus.on($("persons"), personsConsumer);
+        publisher.publishQuotes(NUMBER_OF_QUOTES);
+//        publisher.publishPersons(3);
 
     }
 

@@ -17,8 +17,8 @@ import java.util.concurrent.CountDownLatch;
  * @since 2017/10/12.
  */
 @Service
-public class QuotesReceiver implements Consumer<Event<Integer>> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(QuotesReceiver.class);
+public class QuotesConsumer implements Consumer<Event<Integer>> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(QuotesConsumer.class);
 
 
     @Autowired
